@@ -1,0 +1,282 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Hao's Signature</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+    
+<style>
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+      align-content: center;
+    }
+
+    .AddCartBtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .AddCartBtn:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .AddCartBtn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .price-column {
+        display: inline-block;
+        min-width: 80px;
+        text-align: left;
+    }
+
+    .menu-table td {
+        padding: 12px;
+        vertical-align: middle;
+        text-align: left;
+    }
+    
+    .menu-table td button {
+        display: inline-block;
+        margin-left: 0;
+    }
+
+    .menu-table td:nth-child(2) {
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .back-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        font-weight: bold;
+    }
+
+    .back-btn:hover {
+        background-color: #d32f2f;
+    }
+    
+        .back-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        font-weight: bold;
+    }
+
+    .back-btn:hover {
+        background-color: #d32f2f;
+    }
+    
+</style>
+    
+<body>
+    <div class="background"></div>
+    <div class="dim-overlay"></div>
+    <div class="content">
+        <header>
+            <h1>Welcome to Hao's Signature</h1>
+            <p>The very place that brings joy to happiness</p>
+        </header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="product.html">Menu</a>
+            <a href="orderpage.html">Online Order</a>
+            <a href="cart.html">Cart (<span id="cart-count">0</span>)</a> 
+        </nav>
+        <br>
+        <center>
+            <h1>Main Dish</h1>
+        </center>
+        <div class="menu-container">
+            <a href="orderpage.html" class="back-btn">← Back to Order Page</a>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Dish</th>
+                        <th>Description</th>
+                        <th width="200px">Price</th>
+                    </tr>
+                </thead>
+                <tbody id="menu-items-tbody">
+                    <!-- Static menu items -->
+                    <tr>
+                        <td>Greek Grilled Chicken Breast</td>
+                        <td>Grilled Chicken | Scalloped Potatoes | Roasted Cherry Tomato | Mixed Greens | Demi-glazed Sauce</td>
+                        <td>
+                            <span class="price-column">$38.00</span>
+                            <button class="AddCartBtn" data-name="Greek Grilled Chicken Breast" data-price="38.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pan-seared Salmon</td>
+                        <td>Salmon Fillet | Scalloped Potatoes | Roasted Cherry Tomato | Chickpea | Truffle Hollandaise</td>
+                        <td>
+                            <span class="price-column">$55.00</span>
+                            <button class="AddCartBtn" data-name="Pan-seared Salmon" data-price="55.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Perch Fish & Chips</td>
+                        <td>Perched Fish Fillet | Skin-on Fries | Salad | Tomato & Onion Salsa | Lemon | Fry Sauce</td>
+                        <td>
+                            <span class="price-column">$38.00</span>
+                            <button class="AddCartBtn" data-name="Perch Fish & Chips" data-price="38.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mediteranian Grilled Fish</td>
+                        <td>Grilled Whole Saba | Bell Peppere | Carrot | Onion | Fragrant White Rice | Budu & Cincalok</td>
+                        <td>
+                            <span class="price-column">$45.00</span>
+                            <button class="AddCartBtn" data-name="Mediteranian Grilled Fish" data-price="45.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <!-- Empty row for new item -->
+                    <tr id="new-item-1">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <!-- Dynamic menu items will be inserted here -->
+                    <div id="dynamic-menu-items"></div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <footer>
+        <p><b>© 2025 </b>| Hao's Signature Reserved All the Right.</p>
+    </footer>
+
+<script>
+// Function to update menu content
+function updateMenuContent() {
+    const menuItems = JSON.parse(localStorage.getItem('mainDishItems')) || [];
+    const dynamicMenuDiv = document.getElementById('dynamic-menu-items');
+    
+    // Update empty row with new item
+    if (menuItems.length > 0) {
+        const item = menuItems[0];
+        const row = document.getElementById('new-item-1');
+        if (row && item) {
+            row.innerHTML = `
+                <td>${item.name}</td>
+                <td>${item.description}</td>
+                <td>
+                    <span class="price-column">$${item.price.toFixed(2)}</span>
+                    <button class="AddCartBtn" data-name="${item.name}" data-price="${item.price.toFixed(2)}">Add to cart</button>
+                </td>
+            `;
+        }
+    }
+    
+    // Reattach event listeners
+    const buttons = document.querySelectorAll('.AddCartBtn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const name = this.getAttribute('data-name');
+            const price = parseFloat(this.getAttribute('data-price'));
+            addToCart(name, price);
+        });
+    });
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateMenuContent();
+    updateCartCount();
+});
+
+// Listen for storage changes
+window.addEventListener('storage', function(e) {
+    if (e.key === 'mainDishItems') {
+        updateMenuContent();
+    }
+});
+
+// Cart functions remain the same
+function addToCart(name, price) {
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const existingItem = cartItems.find(item => item.name === name);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cartItems.push({
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
+    
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    updateCartCount();
+    alert('Item added to cart!');
+}
+
+function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+}
+</script>
+</body>
+</html>

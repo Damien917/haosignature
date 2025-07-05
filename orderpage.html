@@ -1,0 +1,253 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Hao's Signature</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+    
+<style>
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+    align-content: center;
+   
+}
+
+    .button_order {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: black;
+            font-style: italic;
+            background-color: white;
+            border: none;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    .button_order:hover {
+            background-color: gray;
+        }
+    
+    .Starters{
+        width: 650px;
+        height: 190px;
+        background-image:url(img/IMG_1737744666.JPG);
+        background-size: 700px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+        
+    }
+    .PnM{
+        align-content: center;
+        display: flex;
+        column-gap: 100px;
+        width: 1000px;
+    }
+    .PnM .Pizza{
+        width: 700px;
+        height: 190px;
+        background-image: url(img/IMG_1737744869.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+    .PnM .Meat{
+        width: 700px;
+        height: 200px;
+        background-image: url(img/IMG_1737745150.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+    
+    
+    .MDnP{
+        align-content: center;
+        display: flex;
+        column-gap: 100px;
+        width: 1000px;
+    }
+    .MDnP .MainDish{
+        width: 700px;
+        height: 200px;
+        background-image: url(img/IMG_1737745285.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+    .MDnP .Pasta{
+        width: 700px;
+        height: 200px;
+        background-image: url(img/IMG_1737745551.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+    
+    .EnHnD{
+        align-content: center;
+        display: flex;
+        column-gap: 100px;
+    }
+    .EnHnD .EspressoBar{
+        width: 600px;
+        height: 200px;
+        background-image: url(img/IMG_1737745756.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+    .EnHnD .HouseCoolers{
+        width: 600px;
+        height: 200px;
+        background-image: url(img/IMG_1737745891.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+    .EnHnD .Desserts{
+        width: 600px;
+        height: 200px;
+        background-image: url(img/IMG_1737746043.JPG);
+        background-size: 600px 170px;
+        border-radius: 15px;
+        border: 1px solid grey;
+    }
+
+    .logout-btn {
+        background-color: #ff4444;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        float: right;
+        margin: 10px;
+    }
+
+    .logout-btn:hover {
+        background-color: #cc0000;
+    }
+
+    
+</style>
+    
+<body>
+    <div class="background"></div>
+    <div class="dim-overlay"></div>
+    <div class="content">
+  <header>
+    <button class="logout-btn" onclick="confirmLogout()">Logout</button>
+    <h1>Welcome to Hao's Signature</h1>
+    <p>The very place that brings joy to happiness</p>
+  </header>
+  <nav>
+    <a href="CusLanding.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="product.html">Menu</a>
+    <a href="orderpage.html">Online Order</a>
+    <a href="cart.html">Cart</a> 
+  </nav>
+<br>
+    <center>
+        <br><br>
+        <div class="Starters">
+            <h1>Hao's Signature Classic Starters</h1>
+            <p>Chickpea & avocado salad, Grilled Shrimp & Vega Salad, Grilled Portobello Musshroom Salad, Wild Mushroom Soup, Clam Chowder.</p>
+            <a href="startersmenu.html" class="button_order"><b>Order Now</b></a><br>
+            </div>
+        <br><br>
+        <div class="PnM">
+        <div class="Pizza">
+            <h1>Pizza</h1>
+            <p>Margheritta, A1 Funghi, Smoked Salmon, Hawaiian Lamb, Roast Beef & Capsicum, Sambalado</p>
+            <a href="pizzamenu.html" class="button_order">
+            <b>Order Now</b></a>
+        </div>
+        <div class="Meat">
+            <h1>Meat Enjoyer</h1>
+            <p>Stone Grilled Stripoin Steak, Stoone Grilled Lmb Steak, 18-hours Smoke Beef, Texas Smoked Ribs</p>
+            <a href="meatmenu.html" class="button_order">
+            <b>Order Now</b></a>
+            </div>
+        </div>
+        <br><br>
+        <div class="MDnP">
+        <div class="MainDish">
+            <h1>Main Dish</h1>
+            <p>Greek Grilled Chicken Breast, Pan-seared Salmon, Percch Fish & Chips, Mediterannian Grilled Fish</p>
+            <a href="maindishmenu.html" class="button_order">
+            <b>Order Now</b></a>
+        </div>
+        <div class="Pasta">
+            <h1>Pasta</h1>
+            <p>Vongole Aglio Olio, Butter Prawn Spaghetti, Bacon Carbonara, Truffle Mac & Cheese, Slow Cooked Shredded Beef Ragu Penne, Almond & Chicken</p>
+            <a href="pastamenu.html" class="button_order">
+            <b>Order Now</b></a>
+        </div>
+        </div>
+        <br><br>
+        <div class="EnHnD">
+        <div class="EspressoBar">
+            <h1>Espresso Bar</h1>
+            <p>Double Espresso, Long Black, Cappucinno, Caffe Latte, Mocha, Flate White</p>
+            <a href="espressomenu.html" class="button_order"><b>Order Now</b></a>
+        </div>
+        <div class="HouseCoolers">
+            <h1>House Coolers</h1>
+            <p>Slow Pressed Juice, Tropical Island, Summer Fizz, Passion Mojito, Honey Citrus, Iced Tes w/ Lemon</p>
+            <a href="housecoolersmenu.html" class="button_order"><b>Order Now</b></a>
+        </div>
+        <div class="Desserts">
+            <h1>Desserts</h1>
+            <p>Apple Strudel, Alomd Butter Chocolate Tart, Banana Bread, Black Forest Cake, Blueberry Tart, Blueberry Lemon Shortcake, Burnt Cheese Cake, Blueberry Pancake, Butter Cake</p>
+            <a href="dessertsmenu.html" class="button_order"><b>Order Now</b></a>
+        </div>
+        </div>
+    </center>
+    </div>
+    <br>
+    <br>
+  <footer>
+    <p><b>© 2025 </b>| Hao's Signature Reserved All the Right.</p>
+        </footer>
+        <script>
+            function confirmLogout() {
+                if (confirm("Are you sure you want to logout?")) {
+                    window.location.href = 'login.html';
+                }
+            }
+        </script>
+        </body>
+</html>

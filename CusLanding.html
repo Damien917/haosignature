@@ -1,0 +1,185 @@
+<html>
+<head>
+  <title>Welcome to Hao's Signature</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+    
+<style>
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 240%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 240%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+}
+    
+     .logout-btn {
+        background-color: #ff4444;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        float: right;
+        margin: 10px;
+    }
+
+    .logout-btn:hover {
+        background-color: #cc0000;
+    }
+
+</style>
+    
+<body>
+    <div class="background"></div>
+    <div class="dim-overlay"></div>
+    <div class="content">
+  <header>
+    <button class="logout-btn" onclick="confirmLogout()">Logout</button>
+    <h1>Welcome to Hao's Signature</h1>
+    <p>The very place that brings joy to happiness</p>
+  </header>
+  <nav>
+    <a href="CusLanding.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="product.html">Menu</a>
+	<a href="orderpage.html">Order Page</a>
+	<a href="cart.html">Cart</a>
+  </nav>
+<br>
+    <center>
+  <div class="slider">
+    <div class="slider-track">
+      <div class="slide">
+          <img src="img/IMG_0412.jpg" alt="Slide 1">
+            <div class="slide-text">
+                <h2>Delicious Family meal</h2>
+                <p>warm meal to share with your family</p>
+            </div>
+      </div>
+      <div class="slide">
+          <img src="img/food3.jpg" alt="Slide 2">
+            <div class="slide-text">
+                <h2>Pancakes Breakfast</h2>
+                <p>Start your day with our pancakes topped with fresh blueberries</p>
+            </div>
+      </div>
+      <div class="slide">
+          <img src="img/pastry.jpg" alt="Slide 3">
+            <div class="slide-text">
+                <h2>Teabreak Pastry</h2>
+                <p>try our freshly baked pastry</p>
+            </div>
+      </div>
+      <div class="slide">
+          <img src="img/drink.jpg" alt="Slide 4">
+            <div class="slide-text">
+                <h2>Refreshing Drinks</h2>
+                <p>Drench your thirst with our refreshing drinks</p>
+            </div>
+      </div>
+    </div>
+  </div>
+        </center>
+  <div class="dots">
+    <span class="dot active" data-slide="0"></span>
+    <span class="dot" data-slide="1"></span>
+    <span class="dot" data-slide="2"></span>
+    <span class="dot" data-slide="3"></span>
+  </div>
+
+    <script>
+  const sliderTrack = document.querySelector('.slider-track');
+const dots = document.querySelectorAll('.dot');
+let currentSlide = 0;
+
+function updateSlider() {
+  sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+  dots.forEach(dot => dot.classList.remove('active'));
+  dots[currentSlide].classList.add('active');
+}
+
+dots.forEach((dot, index) => {
+  dot.addEventListener('click', () => {
+    currentSlide = index;
+    updateSlider();
+  });
+});
+
+let startX, endX;
+
+sliderTrack.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+});
+
+sliderTrack.addEventListener('touchend', (e) => {
+  endX = e.changedTouches[0].clientX;
+  if (startX > endX + 50 && currentSlide < dots.length - 1) {
+    currentSlide++;
+  } else if (startX < endX - 50 && currentSlide > 0) {
+    currentSlide--;
+  }
+  updateSlider();
+});
+    
+    </script>
+
+    
+  <div class="container">
+    <h2>Special Deals</h2>
+    <p>Enjoy our signature dishes and special promotions!</p>
+    <a href="promotion.html">Click here for special!!</a>
+  </div>
+        <center><img src="img/test.png" height="200"></center>
+    
+
+<div class="video-container">
+    <video  controls autoplay loop muted>
+  <source src="img/promo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</div>
+    </div>
+
+    
+    <br>
+    <br>
+    <br>
+    <br>
+  <footer>
+    <p><b>© 2025 </b>| Hao's Signature Reserved All the Right.</p>
+  </footer>
+<script>
+        function confirmLogout() {
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

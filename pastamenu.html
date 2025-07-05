@@ -1,0 +1,248 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Hao's Signature</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+    
+<style>
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+      align-content: center;
+    }
+
+    .AddCartBtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .AddCartBtn:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .AddCartBtn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .price-column {
+        display: inline-block;
+        min-width: 80px;
+        text-align: left;
+    }
+
+    .menu-table td {
+        padding: 12px;
+        vertical-align: middle;
+        text-align: left;
+    }
+    
+    .menu-table td button {
+        display: inline-block;
+        margin-left: 0;
+    }
+
+    .menu-table td:nth-child(2) {
+        text-align: left;
+        white-space: nowrap;
+    }
+        .back-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        font-weight: bold;
+    }
+
+    .back-btn:hover {
+        background-color: #d32f2f;
+    }
+</style>
+    
+<body>
+    <div class="background"></div>
+    <div class="dim-overlay"></div>
+    <div class="content">
+        <header>
+            <h1>Welcome to Hao's Signature</h1>
+            <p>The very place that brings joy to happiness</p>
+        </header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="product.html">Menu</a>
+            <a href="orderpage.html">Online Order</a>
+            <a href="cart.html">Cart (<span id="cart-count">0</span>)</a> 
+        </nav>
+        <br>
+        <center>
+            <h1>Pasta</h1>
+        </center>
+        <div class="menu-container">
+            <a href="orderpage.html" class="back-btn">← Back to Order Page</a>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Dish</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Vongole Aglio Olio</td>
+                        <td>Pappardelle | Asari Clam | Chilli Peppers | Garlic Flakes | Olive Oil | Shaved Parmesan</td>
+                        <td>
+                            <span class="price-column">$29.00</span>
+                            <button class="AddCartBtn" data-name="Vongole Aglio Olio" data-price="29.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Butter Prawn Spaghetti</td>
+                        <td>Grilled Prawn | Garlic Confit | Chilli Flakes | Parmesan Cheese | Alfalfa | Ebiko</td>
+                        <td>
+                            <span class="price-column">$38.00</span>
+                            <button class="AddCartBtn" data-name="Butter Prawn Spaghetti" data-price="38.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bacon Carbonara</td>
+                        <td>Beef Bacon | Pappardelle | Village Egg | Grano Padano Cheese | Cream | English Parsley</td>
+                        <td>
+                            <span class="price-column">$38.00</span>
+                            <button class="AddCartBtn" data-name="Bacon Carbonara" data-price="38.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Truffle Mac & Cheese</td>
+                        <td>Mozarella | Cheddar | Truffle Mushroom</td>
+                        <td>
+                            <span class="price-column">$35.00</span>
+                            <button class="AddCartBtn" data-name="Truffle Mac & Cheese" data-price="35.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Slow Cooked Shredded Beef Ragu Penne</td>
+                        <td>Braised Beef | Creamy Tomato Sauce | Cheddar | Shaved Parmesan</td>
+                        <td>
+                            <span class="price-column">$32.00</span>
+                            <button class="AddCartBtn" data-name="Slow Cooked Shredded Beef Ragu Penne" data-price="32.00">Add to cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Almond & Chicken</td>
+                        <td>Grilled Chicken | Cream | Grana Padano Cheese | Toasted Almond | English Parley | Alfalfa Sprout | Ebiko</td>
+                        <td>
+                            <span class="price-column">$28.00</span>
+                            <button class="AddCartBtn" data-name="Almond & Chicken" data-price="28.00">Add to cart</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <footer>
+        <p><b>© 2025 </b>| Hao's Signature Reserved All the Right.</p>
+    </footer>
+
+<script>
+function addToCart(name, price) {
+    // Get existing cart items from localStorage or initialize empty array
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    // Check if item already exists in cart
+    const existingItem = cartItems.find(item => item.name === name);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cartItems.push({
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
+    
+    // Save back to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    
+    // Update cart count
+    updateCartCount();
+    
+    // Optional: Show feedback to user
+    alert('Item added to cart!');
+}
+
+// Function to update cart count
+function updateCartCount() {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+}
+
+// Initialize cart count when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+    
+    // Add click event listeners to all AddCartBtn buttons
+    const buttons = document.querySelectorAll('.AddCartBtn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const name = this.getAttribute('data-name');
+            const price = parseFloat(this.getAttribute('data-price'));
+            addToCart(name, price);
+        });
+    });
+});
+</script>
+</body>
+</html>

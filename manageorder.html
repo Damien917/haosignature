@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Management</title>
+    <style>
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url('img/restaurant1.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            z-index: 0;
+        }
+
+        .dim-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .status-select {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .order-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .order-table th {
+            background: rgba(33, 150, 243, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+
+        .order-table td {
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .status-pending {
+            background: #ffeeba;
+            color: #856404;
+        }
+
+        .status-preparing {
+            background: #b8daff;
+            color: #004085;
+        }
+
+        .status-ready {
+            background: #c3e6cb;
+            color: #155724;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 50%;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .action-btn {
+            position: relative;
+            z-index: 2;
+        }
+
+        td {
+            position: relative;
+        }
+
+        .order-table {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feedback-section {
+            padding: 5px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .star-rating {
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .feedback-comment {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .feedback-comment small {
+            color: #ddd;
+            font-style: italic;
+        }
+
+        .order-table {
+            min-width: 1000px;
+            overflow-x: auto;
+        }
+
+        .order-table td {
+            vertical-align: top;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="dim-overlay"></div>
+    <div class="content">
+        <div class="container">
+            <div class="header">
+                <h1>Order Management</h1>
+                <div>
+                    <select id="orderStatus" class="status-select" onchange="filterOrders()">
+                        <option value="all">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="preparing">Preparing</option>
+                        <option value="ready">Ready</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                    <a href="StaffLanding.html" class="action-btn" style="background: #6c757d; color: white; text-decoration: none;">Back</a>
+                </div>
+            </div>
+
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Customer Info</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Feedback</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Edit Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <h2>Update Order Status</h2>
+            <div class="form-group">
+                <label style="color: black;">Order Status:</label>
+                <select id="editStatus" required>
+                    <option value="pending">Pending</option>
+                    <option value="preparing">Preparing</option>
+                    <option value="ready">Ready</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <input type="hidden" id="editingId">
+            <button onclick="updateOrderStatus()" class="action-btn edit-btn" style="width: 100%; margin-top: 10px;">Update Status</button>
+        </div>
+    </div>
+
+    <script>
+        function editOrder(index) {
+            try {
+                const orders = JSON.parse(localStorage.getItem('feedback')) || [];
+                const order = orders[index];
+                
+                if (order) {
+                    document.getElementById('editStatus').value = order.status || 'pending';
+                    document.getElementById('editingId').value = index;
+                    document.getElementById('orderModal').style.display = 'block';
+                    
+                    // Position modal in view
+                    const modal = document.getElementById('orderModal');
+                    modal.style.zIndex = "1000";
+                    document.querySelector('.modal-content').style.zIndex = "1001";
+                }
+            } catch (error) {
+                console.error('Error in editOrder:', error);
+                alert('Error opening edit modal');
+            }
+        }
+
+        function updateOrderStatus() {
+            try {
+                const index = parseInt(document.getElementById('editingId').value);
+                const newStatus = document.getElementById('editStatus').value;
+                let orders = JSON.parse(localStorage.getItem('feedback')) || [];
+                
+                if (orders[index]) {
+                    orders[index].status = newStatus;
+                    localStorage.setItem('feedback', JSON.stringify(orders));
+                    document.getElementById('orderModal').style.display = 'none';
+                    loadOrders();
+                    alert('Status updated successfully!');
+                } else {
+                    alert('Order not found');
+                }
+            } catch (error) {
+                console.error('Error in updateOrderStatus:', error);
+                alert('Error updating order status');
+            }
+        }
+
+        function loadOrders() {
+            try {
+                const orders = JSON.parse(localStorage.getItem('feedback')) || [];
+                const tbody = document.getElementById('orderTableBody');
+                const statusFilter = document.getElementById('orderStatus').value;
+                
+                if (orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No orders found</td></tr>';
+                    return;
+                }
+
+                let filteredOrders = statusFilter === 'all' ? 
+                    orders : orders.filter(order => order.status === statusFilter);
+
+                tbody.innerHTML = filteredOrders.map((order, index) => {
+                    const orderTotal = order.order.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const orderItems = order.order.map(item => `${item.name} x${item.quantity}`).join(', ');
+                    
+                    // Create star rating display
+                    const starRating = '★'.repeat(order.rating) + '☆'.repeat(5 - order.rating);
+                    
+                    return `
+                        <tr>
+                            <td>#${index + 1}</td>
+                            <td>${order.name}<br><small>${order.email}</small></td>
+                            <td>${orderItems}</td>
+                            <td>$${orderTotal.toFixed(2)}</td>
+                            <td>
+                                <span class="status-badge status-${order.status || 'pending'}">
+                                    ${order.status || 'Pending'}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="feedback-section">
+                                    <div class="star-rating" style="color: gold;">${starRating}</div>
+                                    <div class="feedback-comment" style="margin-top: 5px;">
+                                        ${order.comments ? `<small>"${order.comments}"</small>` : '<small>No comment</small>'}
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="z-index: 1;">
+                                <button class="action-btn edit-btn" onclick="editOrder(${index})" style="z-index: 2;">Update</button>
+                                <button class="action-btn delete-btn" onclick="deleteOrder(${index})" style="z-index: 2;">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('Error in loadOrders:', error);
+                alert('Error loading orders');
+            }
+        }
+
+        function filterOrders() {
+            loadOrders();
+        }
+
+        function deleteOrder(index) {
+            if (confirm('Are you sure you want to delete this order?')) {
+                try {
+                    let orders = JSON.parse(localStorage.getItem('feedback')) || [];
+                    orders.splice(index, 1);
+                    localStorage.setItem('feedback', JSON.stringify(orders));
+                    loadOrders();
+                } catch (error) {
+                    console.error('Error in deleteOrder:', error);
+                    alert('Error deleting order');
+                }
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Load orders when page loads
+        document.addEventListener('DOMContentLoaded', loadOrders);
+    </script>
+</body>
+</html> 

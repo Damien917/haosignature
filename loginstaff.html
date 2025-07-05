@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staff Login - Hao's Signature</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-image: url('img/restaurant1.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            z-index: 0;
+        }
+
+        .dim-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 20px;
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: #1976D2;
+        }
+
+        .back-to-customer {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .back-to-customer a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        .back-to-customer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="dim-overlay"></div>
+    <div class="content">
+        <header>
+            <h1>Welcome to Hao's Signature</h1>
+        </header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="product.html">Menu</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+
+        <div class="login-container">
+            <h2>Staff Login</h2>
+            <form id="loginForm" onsubmit="return handleStaffLogin(event)">
+                <div class="form-group">
+                    <label for="staffId">Staff ID:</label>
+                    <input type="text" id="staffId" name="staffId" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Staff Login</button>
+                <div id="errorMessage" style="color: #ff6b6b; text-align: center; margin-top: 10px; display: none;"></div>
+            </form>
+            <div class="back-to-customer">
+                <p>Customer? <a href="login.html">Go to Customer Login</a></p>
+            </div>
+        </div>
+    </div>
+        <footer>
+            <p><b>© 2025</b> | Hao's Signature Reserved All the Right.</p>
+        </footer>
+
+    <script>
+    function handleStaffLogin(event) {
+        event.preventDefault();
+        
+        const staffId = document.getElementById('staffId').value;
+        const password = document.getElementById('password').value;
+        
+        // This is a simple example. In a real application, 
+        // you would validate against a backend server
+        if (staffId && password) {
+            // Redirect to staff landing page
+            window.location.href = 'StaffLanding.html';
+        } else {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = 'Please enter both Staff ID and password';
+            errorMessage.style.display = 'block';
+        }
+        
+        return false;
+    }
+    </script>
+</body>
+</html> 

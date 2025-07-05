@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<head>
+  <title>Feedback - Hao's Signature</title>
+  <link rel="stylesheet" href="style.css">
+    
+  <style>
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+    }
+
+    .feedback-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      color: black;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input[type="text"],
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .form-group textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .star-rating input {
+      display: none;
+    }
+
+    .star-rating label {
+      cursor: pointer;
+      font-size: 30px;
+      color: #ddd;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+      color: #ffd700;
+    }
+
+    .submit-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      display: block;
+      width: 100%;
+    }
+
+    .submit-button:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+    }
+
+    .order-summary {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .order-items {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="dim-overlay"></div>
+  <div class="content">
+    <div class="feedback-container">
+      <h2>Thank You for Your Order!</h2>
+      
+      <div class="order-summary">
+        <h3>Order Details</h3>
+        <div id="order-items" class="order-items">
+          <!-- Order items will be displayed here -->
+        </div>
+      </div>
+
+      <h3>Please Rate Your Experience</h3>
+      <form id="feedback-form" onsubmit="handleFeedback(event)">
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5" required>
+            <label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">★</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Comments</label>
+          <textarea id="comments" placeholder="Tell us about your experience..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-button">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Get the last order from localStorage
+    const lastOrder = JSON.parse(localStorage.getItem('lastOrder')) || [];
+    const customerDetails = JSON.parse(localStorage.getItem('customerDetails')) || {};
+
+    function displayOrderSummary() {
+        const orderItems = document.getElementById('order-items');
+        let summaryHTML = '<ul style="list-style-type: none; padding: 0;">';
+        
+        let total = 0;
+        lastOrder.forEach(item => {
+            const subtotal = item.price * item.quantity;
+            total += subtotal;
+            summaryHTML += `
+                <li>${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</li>
+            `;
+        });
+        
+        summaryHTML += `</ul><div class="total" style="margin-top: 10px; font-weight: bold;">Total: $${total.toFixed(2)}</div>`;
+        orderItems.innerHTML = summaryHTML;
+
+        // Auto-fill customer name if available
+        if (customerDetails.name) {
+            document.getElementById('name').value = customerDetails.name;
+        }
+    }
+
+    function handleFeedback(event) {
+        event.preventDefault();
+        
+        const rating = document.querySelector('input[name="rating"]:checked').value;
+        const name = document.getElementById('name').value;
+        const comments = document.getElementById('comments').value;
+        
+        const feedback = {
+            rating: rating,
+            name: name,
+            comments: comments,
+            order: lastOrder,
+            email: customerDetails.email,
+            date: new Date().toISOString()
+        };
+        
+        // Store feedback in localStorage
+        let allFeedback = JSON.parse(localStorage.getItem('feedback')) || [];
+        allFeedback.push(feedback);
+        localStorage.setItem('feedback', JSON.stringify(allFeedback));
+        
+        // Clear the customer details and last order
+        localStorage.removeItem('customerDetails');
+        localStorage.removeItem('lastOrder');
+        
+        alert('Thank you for your feedback! Redirecting to homepage...');
+        // Redirect to CusLanding.html instead of index.html
+        window.location.href = 'CusLanding.html';
+    }
+
+    // Initialize order summary
+    displayOrderSummary();
+  </script>
+</body>
+</html> 

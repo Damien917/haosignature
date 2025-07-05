@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<head>
+  <title>Payment - Hao's Signature</title>
+  <link rel="stylesheet" href="style.css">
+    
+  <style>
+      .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+    }
+
+    .payment-container {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      color: black;
+      display: flex;
+      gap: 20px;
+    }
+
+    .order-summary {
+      flex: 1;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+    }
+
+    .payment-form {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .summary-table th, 
+    .summary-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      color: black;
+    }
+
+    .total {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: right;
+      margin-top: 20px;
+      color: black;
+    }
+
+    .pay-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .pay-button:hover {
+      background-color: #45a049;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="dim-overlay"></div>
+  <div class="content">
+    <div class="payment-container">
+      <!-- Order Summary Section -->
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody id="summary-items">
+            <!-- Items will be dynamically added here -->
+          </tbody>
+        </table>
+        <div class="total">
+          Total: $<span id="summary-total">0.00</span>
+        </div>
+      </div>
+
+      <!-- Payment Form Section -->
+      <div class="payment-form">
+        <h2>Payment Details</h2>
+        <form id="payment-form" onsubmit="handlePayment(event)">
+          <div class="form-group">
+            <label for="name">Cardholder Name</label>
+            <input type="text" id="name" required>
+          </div>
+          <div class="form-group">
+            <label for="card">Card Number</label>
+            <input type="text" id="card" maxlength="16" required>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <div class="form-group" style="flex: 1;">
+              <label for="expiry">Expiry Date</label>
+              <input type="text" id="expiry" placeholder="MM/YY" maxlength="5" required>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" maxlength="3" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email (for receipt)</label>
+            <input type="email" id="email" required>
+          </div>
+          <button type="submit" class="pay-button">Pay Now</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load cart items from localStorage
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function renderSummary() {
+      const summaryTable = document.getElementById("summary-items");
+      const summaryTotal = document.getElementById("summary-total");
+      summaryTable.innerHTML = "";
+
+      let total = 0;
+
+      cartItems.forEach(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        const row = `
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>$${item.price.toFixed(2)}</td>
+            <td>$${subtotal.toFixed(2)}</td>
+          </tr>
+        `;
+        summaryTable.insertAdjacentHTML("beforeend", row);
+      });
+
+      summaryTotal.textContent = total.toFixed(2);
+    }
+
+    function handlePayment(event) {
+      event.preventDefault();
+      
+      // Get the form data
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      
+      // Store the current cart items as the last order before clearing
+      localStorage.setItem('lastOrder', JSON.stringify(cartItems));
+      
+      // Store customer details for feedback form
+      localStorage.setItem('customerDetails', JSON.stringify({
+        name: name,
+        email: email
+      }));
+      
+      // Clear the cart
+      localStorage.removeItem('cartItems');
+      
+      // Show success message
+      alert('Payment successful! Thank you for your order.');
+      
+      // Redirect to feedback page
+      window.location.href = 'feedback.html';
+    }
+
+    // Format card number input
+    document.getElementById('card').addEventListener('input', function(e) {
+      this.value = this.value.replace(/\D/g, '');
+    });
+
+    // Format CVV input
+    document.getElementById('cvv').addEventListener('input', function(e) {
+      this.value = this.value.replace(/\D/g, '');
+    });
+
+    // Format expiry date input
+    document.getElementById('expiry').addEventListener('input', function(e) {
+      this.value = this.value
+        .replace(/\D/g, '')
+        .replace(/^(\d{2})/, '$1/')
+        .substr(0, 5);
+    });
+
+    // Initialize summary rendering
+    renderSummary();
+  </script>
+</body>
+</html> 

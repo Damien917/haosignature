@@ -1,0 +1,230 @@
+<html>
+<head>
+<title>Sign up Form</title>
+<link rel="stylesheet" href="style.css">
+    
+<style>
+    .form-group{
+        margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+    
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    input[type="submit"] {
+      background-color: purple;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: mediumpurple;
+    }
+    
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      margin: 0;
+      padding: 0;
+      background-image: url('img/restaurant1.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-attachment: scroll;
+      z-index: 0;
+    }
+
+    .dim-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120%;
+      background-color: rgba(0, 0, 0, 0.7); 
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2; 
+      color: white;
+      padding: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="background"></div>
+<div class="dim-overlay"></div>
+<div class="content">
+    <header>
+    <h1>Registration Form</h1>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="product.html">Menu</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </nav>
+    
+    <div class="container">
+        <h2>Create an Account</h2>
+        <form id="signupForm" action="#" method="post">
+            
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" placeholder="Enter your full name" required>
+                <div class="error" id="nameError">Please enter your full name.</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label> 
+                <input type="text" id="email" name="email" placeholder="Enter your email" required>
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                <div class="error" id="phoneError">Please enter a valid phone number.</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required minlength="6">
+                <div class="error" id="passwordError">Password must be at least 6 characters long.</div>
+            </div>
+                
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                <div class="error" id="confirmPasswordError">Passwords do not match.</div>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Sign Up">
+            </div>
+        </form>
+    </div>
+    </div>
+    
+    <script>
+    // Form Validation
+    const form = document.getElementById('signupForm');
+    const fullname = document.getElementById('fullname');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const phoneError = document.getElementById('phoneError');
+    const passwordError = document.getElementById('passwordError');
+    const confirmPasswordError = document.getElementById('confirmPasswordError');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        let valid = true;
+        
+        // Name validation
+        if (fullname.value.trim() === '') {
+            nameError.style.display = 'block';
+            valid = false;
+        } else {
+            nameError.style.display = 'none';
+        }
+
+        // Email validation
+        if (!email.value.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+            emailError.style.display = 'block';
+            valid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
+
+        // Phone validation
+        const phoneRegex = /^\d{8,}$/; // Validates phone numbers with at least 8 digits
+        if (!phone.value.match(phoneRegex)) {
+            phoneError.style.display = 'block';
+            valid = false;
+        } else {
+            phoneError.style.display = 'none';
+        }
+
+        // Password validation
+        if (password.value.length < 6) {
+            passwordError.style.display = 'block';
+            valid = false;
+        } else {
+            passwordError.style.display = 'none';
+        }
+
+        // Confirm Password validation
+        if (password.value !== confirmPassword.value) {
+            confirmPasswordError.style.display = 'block';
+            valid = false;
+        } else {
+            confirmPasswordError.style.display = 'none';
+        }
+
+        // If the form is valid, save user data and redirect to login
+        if (valid) {
+            // Get existing users or initialize empty array
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            
+            // Check if email already exists
+            if (users.some(user => user.email === email.value)) {
+                alert('This email is already registered. Please use a different email.');
+                return;
+            }
+
+            // Create new user object
+            const newUser = {
+                username: fullname.value,
+                email: email.value,
+                phone: phone.value,
+                password: password.value,
+                registrationDate: new Date().toISOString()
+            };
+
+            // Add new user to array
+            users.push(newUser);
+
+            // Save updated users array to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Registration successful! Please login with your email and password.');
+            window.location.href = 'login.html';
+        }
+    });
+  </script>
+    
+<footer>
+    <p><b>© 2025 </b>| Hao's Signature Reserved All the Right.</p>
+</footer>
+    
+</body>
+</html>
